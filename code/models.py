@@ -1,9 +1,3 @@
-"""
-Homework 5 - CNNs
-CS1430 - Computer Vision
-Brown University
-"""
-
 import tensorflow as tf
 from tensorflow.keras.layers import \
     Conv2D, MaxPool2D, Dropout, Flatten, Dense
@@ -69,13 +63,6 @@ class VGGModel(tf.keras.Model):
               self.vgg16[i].trainable = False
 
         # TODO: Write a classification head for our 15-scene classification task.
-
-       #  self.head = [
-       #        tf.keras.layers.Flatten(),
-       #        tf.keras.layers.Dense(550, activation="relu"),
-       #        tf.keras.layers.Dense(70, activation="relu"),
-       #        tf.keras.layers.Dense(15, activation="softmax")
-       #  ]
         self.head = [
               Dense(256, activation='relu'),
               Flatten(),
@@ -102,6 +89,5 @@ class VGGModel(tf.keras.Model):
         # TASK 3
         # TODO: Select a loss function for your network (see the documentation
         #       for tf.keras.losses)
-
         loss = tf.keras.losses.sparse_categorical_crossentropy(labels, predictions)
         return loss
