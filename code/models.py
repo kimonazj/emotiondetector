@@ -10,7 +10,6 @@ from tensorflow.keras.layers import \
 
 import hyperparameters as hp
 
-
 class VGGModel(tf.keras.Model):
     def __init__(self):
         super(VGGModel, self).__init__()
