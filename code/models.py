@@ -8,15 +8,7 @@ class VGGModel(tf.keras.Model):
     def __init__(self):
         super(VGGModel, self).__init__()
 
-        # TASK 3
-        # TODO: Select an optimizer for your network (see the documentation
-        #       for tf.keras.optimizers)
-
         self.optimizer = tf.keras.optimizers.Adam(learning_rate=hp.learning_rate)
-
-        # Don't change the below:
-
-        #NEW EDITS
         self.vgg16 =  tf.keras.applications.vgg16(weights = None, include_top = False, input_shape = (48,48,3))
 
         # TASK 3
@@ -28,12 +20,13 @@ class VGGModel(tf.keras.Model):
 
         # TODO: Write a classification head for our 15-scene classification task.
         self.head = [
-              Dense(256, activation='relu'),
+              Dense(hp.num_classes, activation='relu'),
               Flatten(),
               Dropout(0.3),
               Dense(hp.num_classes, activation='softmax')
         ]
 
+        #regular model is the head and the base model is the vgg16
         # Don't change the below:
         self.vgg16 = tf.keras.Sequential(self.vgg16, name="vgg_base")
         self.head = tf.keras.Sequential(self.head, name="vgg_head")
