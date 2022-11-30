@@ -13,6 +13,7 @@ import tensorflow as tf
 
 import hyperparameters as hp
 
+
 class Datasets():
     """ Class for containing the training and test sets as well as
     other useful data-related information. Contains the functions
