@@ -253,8 +253,8 @@ def test(model, X):
 #         train(model, datasets, checkpoint_path, logs_path, init_epoch)
 
 def main():
-    TRAIN_PATH = ('../data/train')
-    TEST_PATH = ('../data/test')
+    TRAIN_PATH = ('../data/train/')
+    TEST_PATH = ('../data/test/')
     training_data = Datasets(TRAIN_PATH, hp.img_size)
     X_train, y_train, train_labels = training_data.load_data()
 
