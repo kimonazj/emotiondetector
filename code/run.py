@@ -19,9 +19,9 @@ from tensorboard_utils import \
         ImageLabelingLogger, ConfusionMatrixLogger, CustomModelSaver
 from sklearn.metrics import accuracy_score
 from skimage.io import imread
-from lime import lime_image
-from skimage.segmentation import mark_boundaries
-from matplotlib import pyplot as plt
+# from lime import lime_image
+# from skimage.segmentation import mark_boundaries
+# from matplotlib import pyplot as plt
 import numpy as np
 
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
