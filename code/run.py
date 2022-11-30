@@ -263,8 +263,8 @@ def main():
     X_test, y_test, testing_labels = testing_data.load_data()
 
     model = VGGModel()
-    model.vgg16.summary()
-    model.head.summary()
+    # model.vgg16.summary()
+    # model.head.summary()
     model.compile(
         optimizer=model.optimizer,
         loss=model.loss_fn,
