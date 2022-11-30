@@ -1,6 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras.layers import \
     Conv2D, MaxPool2D, Dropout, Flatten, Dense
+from keras.applications.vgg16 import VGG16
 
 import hyperparameters as hp
 
@@ -9,7 +10,7 @@ class VGGModel(tf.keras.Model):
         super(VGGModel, self).__init__()
 
         self.optimizer = tf.keras.optimizers.Adam(learning_rate=hp.learning_rate)
-        self.vgg16 =  tf.keras.applications.vgg16(weights = None, include_top = False, input_shape = (48,48,3))
+        self.vgg16 =  VGG16(weights = None, include_top = False, input_shape = (48,48,3))
 
         # TASK 3
         # TODO: Make all layers in self.vgg16 non-trainable. This will freeze the
