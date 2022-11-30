@@ -216,7 +216,9 @@ class Datasets():
                 preprocessing_function=self.preprocess_fn)
 
         # VGG must take images of size 224x224
-        img_size = 224 if is_vgg else hp.img_size
+        # NEW EDIT: image size = 48 x 48
+        # deleted: img_size = 224 if is_vgg else hp.img_size
+        img_size = 48
 
         classes_for_flow = None
 
