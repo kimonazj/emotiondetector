@@ -155,7 +155,8 @@ def parse_args():
 #         initial_epoch=init_epoch,
 #     )
 def train(model, X, y, epochs, batch_size):
-    model.fit(X, y, epochs, batch_size, verbose = 1)
+    h = model.fit(X, y, epochs, batch_size, verbose = 1)
+    return h
 
 
 def test(model, X):
@@ -270,7 +271,7 @@ def main():
         metrics=["sparse_categorical_accuracy"])
     
     #didn't return history in train method
-    train(model, X_train, y_train, hp.num_epochs, hp.batch_size)
+    h = train(model, X_train, y_train, hp.num_epochs, hp.batch_size)
 
     if ARGS.evaluate:
         testing_data = Datasets(TEST_PATH, hp.img_size)
