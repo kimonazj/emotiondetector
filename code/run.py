@@ -155,7 +155,8 @@ def parse_args():
 #         initial_epoch=init_epoch,
 #     )
 def train(model, X, y, epochs, batch_size):
-    h = model.fit(X, y, epochs, batch_size, verbose = 1)
+    h = model.fit(X, y, epochs = epochs, batch_size = batch_size, verbose = 1)
+    
     return h
 
 
