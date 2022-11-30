@@ -266,10 +266,15 @@ def main():
     model = VGGModel()
     # model.vgg16.summary()
     # model.head.summary()
+    
+    # model.compile(
+    #     optimizer=model.optimizer,
+    #     loss=model.loss_fn,
+    #     metrics=["sparse_categorical_accuracy"])
     model.compile(
         optimizer=model.optimizer,
         loss=model.loss_fn,
-        metrics=["sparse_categorical_accuracy"])
+        metrics=["accuracy"])
     
     #didn't return history in train method
     h = train(model, X_train, y_train, hp.num_epochs, hp.batch_size)
