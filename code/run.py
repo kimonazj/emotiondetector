@@ -153,12 +153,14 @@ def train(model, X, y, epochs, batch_size):
     return h
 
 
-def test(model, X):
+def test(model, X): #, y, batch_size):
     """ Testing routine. """
 
     # Run model on test set
     predictions = model.evaluate(
         x=X,
+        # y
+        # batch_size = batch_size
         verbose=1,
     )
     return predictions
@@ -279,6 +281,7 @@ def main():
         testing_data = Datasets(TEST_PATH, hp.img_size)
         X_test, y_test, testing_labels = testing_data.load_data()
         preds = test(model, X_test)
+        # pred = test(model, X_test, y_test, hp.batch_size)
         y_preds = [np.argmax(prob) for prob in preds]
         print('Test accuracy... = %.2f' % accuracy_score(y_test, y_preds))
 
