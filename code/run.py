@@ -261,6 +261,7 @@ def main():
     X_train, y_train, train_labels = training_data.load_data()
     print('Our Training Labels: ')
     print(train_labels)
+    print()
 
     testing_data = Datasets(TEST_PATH, hp.img_size)
     X_test, y_test, testing_labels = testing_data.load_data()
