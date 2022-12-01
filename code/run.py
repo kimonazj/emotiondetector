@@ -259,6 +259,8 @@ def main():
     TEST_PATH = ('../data/test/')
     training_data = Datasets(TRAIN_PATH, hp.img_size)
     X_train, y_train, train_labels = training_data.load_data()
+    print('Our Training Labels: ')
+    print(train_labels)
 
     testing_data = Datasets(TEST_PATH, hp.img_size)
     X_test, y_test, testing_labels = testing_data.load_data()
@@ -266,7 +268,7 @@ def main():
     model = VGGModel()
     # model.vgg16.summary()
     # model.head.summary()
-    
+
     # model.compile(
     #     optimizer=model.optimizer,
     #     loss=model.loss_fn,
