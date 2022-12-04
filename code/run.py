@@ -270,7 +270,10 @@ def main():
     print(train_labels)
     print()
 
-    testing_data = Datasets(TEST_PATH, hp.img_size)
+    # testing_data = Datasets(TEST_PATH, hp.img_size)
+    # X_test, y_test, testing_labels = testing_data.load_data()
+
+    testing_data = Datasets(MY_TEST_PATH, hp.img_size)
     X_test, y_test, testing_labels = testing_data.load_data()
 
     model = VGGModel()
