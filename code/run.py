@@ -14,6 +14,7 @@ from tensorboard_utils import \
 from sklearn.metrics import accuracy_score
 from skimage.io import imread
 from keras.preprocessing.image import ImageDataGenerator
+import pandas as pd
 # from lime import lime_image
 # from skimage.segmentation import mark_boundaries
 # from matplotlib import pyplot as plt
@@ -298,10 +299,13 @@ def main():
     if ARGS.makePredictions:
         data_gen = ImageDataGenerator(rescale = 1.0/255)
         pred_gen = data_gen.flow_from_directory(TEST_PATH, target_size = hp.img_size, color_mode = "grayscale", batch_size = hp.batch_size, class_mode = "categorical", shuffle = False)
-        # preds = test(model, X_test)
-        # preds = [testing_labels[l] for l in preds]
-        # files = pred_gen.filenames
-        # actual_label = [testing_labels[l] for l in pred_gen.classes]
+        preds = test(model, X_test)
+        preds = [testing_labels[l] for l in preds]
+        files = pred_gen.filenames
+        actual_label = [testing_labels[l] for l in pred_gen.classes]
+        results = pd.DataFrame({"file": files, "predictions": preds, "actual label": actual_label})
+        print('length of files: ', len(files))
+
     else:
         h = train(model, X_train, y_train, 5, hp.batch_size)
     
