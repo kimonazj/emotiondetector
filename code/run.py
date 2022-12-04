@@ -299,6 +299,7 @@ def main():
     if ARGS.makePredictions:
         data_gen = ImageDataGenerator(rescale = 1.0/255)
         pred_gen = data_gen.flow_from_directory(TEST_PATH, target_size = hp.img_size, color_mode = "grayscale", batch_size = hp.batch_size, class_mode = "categorical", shuffle = False)
+        print('x_test: ',X_test)
         preds = test(model, X_test)
         preds = [testing_labels[l] for l in preds]
         files = pred_gen.filenames
