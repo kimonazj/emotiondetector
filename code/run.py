@@ -270,11 +270,11 @@ def main():
     print(train_labels)
     print()
 
-    # testing_data = Datasets(TEST_PATH, hp.img_size)
-    # X_test, y_test, testing_labels = testing_data.load_data()
-
-    testing_data = Datasets(MY_TEST_PATH, hp.img_size)
+    testing_data = Datasets(TEST_PATH, hp.img_size)
     X_test, y_test, testing_labels = testing_data.load_data()
+
+    # testing_data = Datasets(MY_TEST_PATH, hp.img_size)
+    # X_test, y_test, testing_labels = testing_data.load_data()
 
     model = VGGModel()
     # model.vgg16.summary()
@@ -302,7 +302,7 @@ def main():
         print('Test accuracy... = %.2f' % accuracy_score(y_test, preds))
     if ARGS.makePredictions:
         data_gen = ImageDataGenerator(rescale = 1.0/255)
-        pred_gen = data_gen.flow_from_directory(MY_TEST_PATH, target_size = hp.img_size, color_mode = "grayscale", batch_size = 2, class_mode = "categorical", shuffle = False)
+        pred_gen = data_gen.flow_from_directory(TEST_PATH, target_size = hp.img_size, color_mode = "grayscale", batch_size = 2, class_mode = "categorical", shuffle = False)
         preds = test(model, X_test)
         print(len(testing_labels), len(preds))
         preds = [testing_labels[l] for l in preds]
