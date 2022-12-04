@@ -306,7 +306,6 @@ def main():
         results = pd.DataFrame({"file": files, "predictions": preds, "actual label": actual_label})
         print('file: ', results.loc[0])
 
-
     else:
         h = train(model, X_train, y_train, 5, hp.batch_size)
     
