@@ -304,7 +304,8 @@ def main():
         files = pred_gen.filenames
         actual_label = [testing_labels[l] for l in pred_gen.classes]
         results = pd.DataFrame({"file": files, "predictions": preds, "actual label": actual_label})
-        print('length of files: ', len(files))
+        print('file: ', results.loc[0])
+
 
     else:
         h = train(model, X_train, y_train, 5, hp.batch_size)
