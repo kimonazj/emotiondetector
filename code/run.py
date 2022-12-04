@@ -157,12 +157,14 @@ def test(model, X): #, y, batch_size):
     """ Testing routine. """
 
     # Run model on test set
-    predictions = model.evaluate(
-        x=X,
-        # y
-        # batch_size = batch_size
-        verbose=1,
-    )
+    # predictions = model.evaluate(
+    #     x=X,
+    #     # y
+    #     # batch_size = batch_size
+    #     verbose=1,
+    # )
+    preds = model.predict(x=X)
+    predictions = [np.argmax(p) for p in preds]
     return predictions
 
 
@@ -283,8 +285,8 @@ def main():
         X_test, y_test, testing_labels = testing_data.load_data()
         preds = test(model, X_test)
         # pred = test(model, X_test, y_test, hp.batch_size)
-        y_preds = [np.argmax(prob) for prob in preds]
-        print('Test accuracy... = %.2f' % accuracy_score(y_test, y_preds))
+
+        print('Test accuracy... = %.2f' % accuracy_score(y_test, preds))
 
 # Make arguments global
 ARGS = parse_args()
