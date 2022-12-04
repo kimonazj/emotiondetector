@@ -286,7 +286,7 @@ def main():
     
     #didn't return history in train method
     # h = train(model, X_train, y_train, hp.num_epochs, hp.batch_size)
-    h = train(model, X_train, y_train, 5, hp.batch_size)
+    # h = train(model, X_train, y_train, 5, hp.batch_size)
 
     #this evaluates our model
     if ARGS.evaluate:
@@ -302,9 +302,8 @@ def main():
         # preds = [testing_labels[l] for l in preds]
         # files = pred_gen.filenames
         # actual_label = [testing_labels[l] for l in pred_gen.classes]
-
-    # else:
-    #     h = train(model, X_train, y_train, 5, hp.batch_size)
+    else:
+        h = train(model, X_train, y_train, 5, hp.batch_size)
     
     #this is predicting our images
 
