@@ -275,7 +275,8 @@ def main():
         metrics=["accuracy"])
     
     #didn't return history in train method
-    h = train(model, X_train, y_train, hp.num_epochs, hp.batch_size)
+    # h = train(model, X_train, y_train, hp.num_epochs, hp.batch_size)
+    h = train(model, X_train, y_train, 5, hp.batch_size)
 
     if ARGS.evaluate:
         testing_data = Datasets(TEST_PATH, hp.img_size)
