@@ -21,10 +21,11 @@ class VGGModel(tf.keras.Model):
 
         # TODO: Write a classification head for our 15-scene classification task.
         self.head = [
-              Dense(hp.num_classes, activation='relu'),
               Flatten(),
-              Dropout(0.3),
-              Dense(hp.num_classes, activation='softmax')
+              Dense(1000, activation='relu'),
+              Flatten(),
+              Dropout(0.1),
+              Dense(6, activation='softmax')
         ]
 
         #regular model is the head and the base model is the vgg16
