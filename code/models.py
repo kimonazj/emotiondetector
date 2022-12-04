@@ -5,12 +5,15 @@ from keras.applications.vgg16 import VGG16
 
 import hyperparameters as hp
 
+
 class VGGModel(tf.keras.Model):
     def __init__(self):
         super(VGGModel, self).__init__()
 
-        self.optimizer = tf.keras.optimizers.Adam(learning_rate=hp.learning_rate)
-        self.vgg16 =  VGG16(weights = None, include_top = False, input_shape = (48,48,3))
+        self.optimizer = tf.keras.optimizers.Adam(
+            learning_rate=hp.learning_rate)
+        self.vgg16 = VGG16(weights=None, include_top=False,
+                           input_shape=(48, 48, 3))
 
         # TASK 3
         # TODO: Make all layers in self.vgg16 non-trainable. This will freeze the
@@ -21,13 +24,40 @@ class VGGModel(tf.keras.Model):
 
         # TODO: Write a classification head for our 15-scene classification task.
         self.head = [
-              Dense(hp.num_classes, activation='relu'),
-              Flatten(),
-              Dropout(0.3),
-              Dense(hp.num_classes, activation='softmax')
+            # Block 2
+            Conv2D(32, 3, 1, padding="same",
+                   activation="relu", name="block2_conv1"),
+            Conv2D(32, 3, 1, padding="same",
+                   activation="relu", name="block2_conv2"),
+            MaxPool2D(2, name="block2_pool"),
+            # Block 3
+            Conv2D(64, 3, 1, padding="same",
+                   activation="relu", name="block3_conv1"),
+            Conv2D(64, 3, 1, padding="same",
+                   activation="relu", name="block3_conv2"),
+            MaxPool2D(2, name="block3_pool"),
+            # Block 4
+            Conv2D(128, 3, 1, padding="same",
+                   activation="relu", name="block4_conv1"),
+            Conv2D(128, 3, 1, padding="same",
+                   activation="relu", name="block4_conv2"),
+            MaxPool2D(2, name="block4_pool"),
+            # Block 5
+            Conv2D(256, 3, 1, padding="same",
+                   activation="relu", name="block5_conv1"),
+            Conv2D(256, 3, 1, padding="same",
+                   activation="relu", name="block5_conv2"),
+            Conv2D(256, 3, 1, padding="same",
+                   activation="relu", name="block5_conv3"),
+            MaxPool2D(2, name="block5_pool"),
+            Dropout(0.3),
+            Flatten(),
+            Dense(500, activation='relu'),
+            Dropout(0.1),
+            Dense(hp.num_classes, activation='softmax')
         ]
 
-        #regular model is the head and the base model is the vgg16
+        # regular model is the head and the base model is the vgg16
         # Don't change the below:
         self.vgg16 = tf.keras.Sequential(self.vgg16, name="vgg_base")
         self.head = tf.keras.Sequential(self.head, name="vgg_head")
@@ -47,5 +77,6 @@ class VGGModel(tf.keras.Model):
         # TASK 3
         # TODO: Select a loss function for your network (see the documentation
         #       for tf.keras.losses)
-        loss = tf.keras.losses.sparse_categorical_crossentropy(labels, predictions)
+        loss = tf.keras.losses.sparse_categorical_crossentropy(
+            labels, predictions)
         return loss
