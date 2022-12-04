@@ -13,6 +13,7 @@ from tensorboard_utils import \
         ImageLabelingLogger, ConfusionMatrixLogger, CustomModelSaver
 from sklearn.metrics import accuracy_score
 from skimage.io import imread
+from keras.preprocessing.image import ImageDataGenerator
 # from lime import lime_image
 # from skimage.segmentation import mark_boundaries
 # from matplotlib import pyplot as plt
@@ -61,6 +62,13 @@ def parse_args():
         help='''Skips training and evaluates on the test set once.
         You can use this to test an already trained model by loading
         its checkpoint.''')
+    parser.add_argument(
+        '--makePredictions',
+        action='store_true',
+        help='''Skips training and evaluates on the test set once.
+        You can use this to test an already trained model by loading
+        its checkpoint.'''
+    )
     # parser.add_argument(
     #     '--lime-image',
     #     default='test/Bedroom/image_0003.jpg',
@@ -280,13 +288,25 @@ def main():
     # h = train(model, X_train, y_train, hp.num_epochs, hp.batch_size)
     h = train(model, X_train, y_train, 5, hp.batch_size)
 
+    #this evaluates our model
     if ARGS.evaluate:
         testing_data = Datasets(TEST_PATH, hp.img_size)
         X_test, y_test, testing_labels = testing_data.load_data()
         preds = test(model, X_test)
         # pred = test(model, X_test, y_test, hp.batch_size)
-
         print('Test accuracy... = %.2f' % accuracy_score(y_test, preds))
+    if ARGS.makePredictions:
+        data_gen = ImageDataGenerator(rescale = 1.0/255)
+        pred_gen = data_gen.flow_from_directory(TEST_PATH, target_size = hp.img_size, color_mode = "grayscale", batch_size = hp.batch_size, class_mode = "categorical", shuffle = False)
+        # preds = test(model, X_test)
+        # preds = [testing_labels[l] for l in preds]
+        # files = pred_gen.filenames
+        # actual_label = [testing_labels[l] for l in pred_gen.classes]
+
+    # else:
+    #     h = train(model, X_train, y_train, 5, hp.batch_size)
+    
+    #this is predicting our images
 
 # Make arguments global
 ARGS = parse_args()
