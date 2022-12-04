@@ -24,36 +24,10 @@ class VGGModel(tf.keras.Model):
 
         # TODO: Write a classification head for our 15-scene classification task.
         self.head = [
-            # Block 2
-            Conv2D(32, 3, 1, padding="same",
-                   activation="relu", name="block2_conv1"),
-            Conv2D(32, 3, 1, padding="same",
-                   activation="relu", name="block2_conv2"),
-            MaxPool2D(2, name="block2_pool"),
-            # Block 3
-            Conv2D(64, 3, 1, padding="same",
-                   activation="relu", name="block3_conv1"),
-            Conv2D(64, 3, 1, padding="same",
-                   activation="relu", name="block3_conv2"),
-            MaxPool2D(2, name="block3_pool"),
-            # Block 4
-            Conv2D(128, 3, 1, padding="same",
-                   activation="relu", name="block4_conv1"),
-            Conv2D(128, 3, 1, padding="same",
-                   activation="relu", name="block4_conv2"),
-            MaxPool2D(2, name="block4_pool"),
-            # Block 5
-            Conv2D(256, 3, 1, padding="same",
-                   activation="relu", name="block5_conv1"),
-            Conv2D(256, 3, 1, padding="same",
-                   activation="relu", name="block5_conv2"),
-            Conv2D(256, 3, 1, padding="same",
-                   activation="relu", name="block5_conv3"),
-            MaxPool2D(2, name="block5_pool"),
-            Dropout(0.3),
-            Flatten(),
-            Dense(500, activation='relu'),
             Dropout(0.1),
+            Flatten(),
+            Dense(15, activation='relu'),
+            Dropout(0.3),
             Dense(hp.num_classes, activation='softmax')
         ]
 
