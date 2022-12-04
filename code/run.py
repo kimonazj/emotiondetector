@@ -15,9 +15,10 @@ from sklearn.metrics import accuracy_score
 from skimage.io import imread
 from keras.preprocessing.image import ImageDataGenerator
 import pandas as pd
+import cv2
 # from lime import lime_image
 # from skimage.segmentation import mark_boundaries
-# from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt
 import numpy as np
 
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -308,8 +309,14 @@ def main():
         files = pred_gen.filenames
         actual_label = [testing_labels[l] for l in pred_gen.classes]
         results = pd.DataFrame({"file": files, "predictions": preds, "actual label": actual_label})
-        print('file: ', results.loc[0])
-        print(len(files))
+        for i in range(len(files)):
+            file, prediction, actual = results.loc[i]
+            path = os.path.join(MY_TEST_PATH, file)
+            img = cv2.imread(path)
+            plt.imshow(img)
+            plt.title("Our model predicted class: {} {} Actual class: {}".format(prediction, '\n', actual))
+            plt.show()
+
     else:
         h = train(model, X_train, y_train, 5, hp.batch_size)
     
