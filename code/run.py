@@ -263,6 +263,7 @@ def test(model, X): #, y, batch_size):
 def main():
     TRAIN_PATH = ('../data/train/')
     TEST_PATH = ('../data/test/')
+    MY_TEST_PATH = ('../data/my_test/')
     training_data = Datasets(TRAIN_PATH, hp.img_size)
     X_train, y_train, train_labels = training_data.load_data()
     print('Our Training Labels: ')
@@ -298,13 +299,13 @@ def main():
         print('Test accuracy... = %.2f' % accuracy_score(y_test, preds))
     if ARGS.makePredictions:
         data_gen = ImageDataGenerator(rescale = 1.0/255)
-        pred_gen = data_gen.flow_from_directory(TEST_PATH, target_size = hp.img_size, color_mode = "grayscale", batch_size = hp.batch_size, class_mode = "categorical", shuffle = False)
+        pred_gen = data_gen.flow_from_directory(MY_TEST_PATH, target_size = hp.img_size, color_mode = "grayscale", batch_size = hp.batch_size, class_mode = "categorical", shuffle = False)
         preds = test(model, X_test)
         preds = [testing_labels[l] for l in preds]
         files = pred_gen.filenames
         actual_label = [testing_labels[l] for l in pred_gen.classes]
         results = pd.DataFrame({"file": files, "predictions": preds, "actual label": actual_label})
-        print('file: ', results.loc[1])
+        print('file: ', results.loc[0])
 
     else:
         h = train(model, X_train, y_train, 5, hp.batch_size)
