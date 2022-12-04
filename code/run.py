@@ -304,13 +304,12 @@ def main():
         data_gen = ImageDataGenerator(rescale = 1.0/255)
         pred_gen = data_gen.flow_from_directory(MY_TEST_PATH, target_size = hp.img_size, color_mode = "grayscale", batch_size = 2, class_mode = "categorical", shuffle = False)
         preds = test(model, X_test)
-        print(len(testing_labels), len(preds))
         preds = [testing_labels[l] for l in preds]
         files = pred_gen.filenames
         actual_label = [testing_labels[l] for l in pred_gen.classes]
         results = pd.DataFrame({"file": files, "predictions": preds, "actual label": actual_label})
         print('file: ', results.loc[0])
-
+        print(len(files))
     else:
         h = train(model, X_train, y_train, 5, hp.batch_size)
     
