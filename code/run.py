@@ -291,19 +291,17 @@ def main():
         metrics=["accuracy"])
     
     #didn't return history in train method
-    # h = train(model, X_train, y_train, hp.num_epochs, hp.batch_size)
+    h = train(model, X_train, y_train, hp.num_epochs, hp.batch_size)
     # h = train(model, X_train, y_train, 5, hp.batch_size)
 
     #this evaluates our model
     if ARGS.evaluate:
-        h = train(model, X_train, y_train, 5, hp.batch_size)
         testing_data = Datasets(TEST_PATH, hp.img_size)
         X_test, y_test, testing_labels = testing_data.load_data()
         preds = test(model, X_test)
         # pred = test(model, X_test, y_test, hp.batch_size)
         print('Test accuracy... = %.2f' % accuracy_score(y_test, preds))
     elif ARGS.makePredictions:
-        h = train(model, X_train, y_train, 5, hp.batch_size)
         data_gen = ImageDataGenerator(rescale = 1.0/255)
         pred_gen = data_gen.flow_from_directory(MY_TEST_PATH, target_size = hp.img_size, color_mode = "grayscale", batch_size = hp.batch_size, class_mode = "categorical", shuffle = False)
         preds = test(model, X_test)
