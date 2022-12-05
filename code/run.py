@@ -286,6 +286,8 @@ def main():
     print('Our Training Labels: ')
     print(train_labels)
     print()
+    print(X_train.shape)
+    print(y_train.shape)
 
     # testing_data = Datasets(TEST_PATH, hp.img_size)
     # X_test, y_test, testing_labels = testing_data.load_data()
