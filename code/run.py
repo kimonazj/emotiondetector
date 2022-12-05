@@ -173,7 +173,7 @@ def train(model, X, y, epochs, batch_size):
                            patience=10,
                            restore_best_weights=True,
                            mode='min')
-    h = model.fit(X, y, epochs = epochs, batch_size = batch_size, callbacks=[tl_checkpoint_1, early_stop, plot_loss_1],verbose = 1)
+    h = model.fit(X, y, epochs = epochs, batch_size = batch_size, callbacks=[tl_checkpoint_1, early_stop],verbose = 1)
     return h
 
 
