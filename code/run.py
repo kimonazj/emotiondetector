@@ -164,12 +164,12 @@ def train(model, X, y, epochs, batch_size):
     #plot_loss_1 = PlotLossesCallback()
 
     # ModelCheckpoint callback - save best weights
-    tl_checkpoint_1 = ModelCheckpoint(filepath='tl_model_v1.weights.best.hdf5',
+    tl_checkpoint_1 = ModelCheckpoint(filepath='vgg16_1.h5',
                                   save_best_only=True,
                                   verbose=1)
 
     # EarlyStopping
-    early_stop = EarlyStopping(monitor='val_loss',
+    early_stop = EarlyStopping(monitor='loss',
                            patience=10,
                            restore_best_weights=True,
                            mode='min')
@@ -187,7 +187,7 @@ def test(model, X): #, y, batch_size):
     #     # batch_size = batch_size
     #     verbose=1,
     # )
-    model.load_weights('tl_model_v1.weights.best.hdf5') 
+    model.load_weights('vgg16_1.h5') 
     # initialize the best trained weights
     preds = model.predict(x=X)
     predictions = [np.argmax(p) for p in preds]
