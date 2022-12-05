@@ -20,6 +20,8 @@ import cv2
 # from skimage.segmentation import mark_boundaries
 from matplotlib import pyplot as plt
 import numpy as np
+#from livelossplot.inputs.keras import PlotLossesCallback
+from keras.callbacks import ModelCheckpoint, EarlyStopping
 
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
@@ -159,7 +161,19 @@ def parse_args():
 #         initial_epoch=init_epoch,
 #     )
 def train(model, X, y, epochs, batch_size):
-    h = model.fit(X, y, epochs = epochs, batch_size = batch_size, verbose = 1)
+    #plot_loss_1 = PlotLossesCallback()
+
+    # ModelCheckpoint callback - save best weights
+    tl_checkpoint_1 = ModelCheckpoint(filepath='tl_model_v1.weights.best.hdf5',
+                                  save_best_only=True,
+                                  verbose=1)
+
+    # EarlyStopping
+    early_stop = EarlyStopping(monitor='val_loss',
+                           patience=10,
+                           restore_best_weights=True,
+                           mode='min')
+    h = model.fit(X, y, epochs = epochs, batch_size = batch_size, callbacks=[tl_checkpoint_1, early_stop],verbose = 1)
     return h
 
 
@@ -173,6 +187,8 @@ def test(model, X): #, y, batch_size):
     #     # batch_size = batch_size
     #     verbose=1,
     # )
+    model.load_weights('tl_model_v1.weights.best.hdf5') 
+    # initialize the best trained weights
     preds = model.predict(x=X)
     predictions = [np.argmax(p) for p in preds]
     return predictions
@@ -270,6 +286,8 @@ def main():
     print('Our Training Labels: ')
     print(train_labels)
     print()
+    print(X_train.shape)
+    print(y_train.shape)
 
     # testing_data = Datasets(TEST_PATH, hp.img_size)
     # X_test, y_test, testing_labels = testing_data.load_data()
@@ -290,12 +308,15 @@ def main():
         loss=model.loss_fn,
         metrics=["accuracy"])
     
+    
+    
     #didn't return history in train method
     # h = train(model, X_train, y_train, hp.num_epochs, hp.batch_size)
     # h = train(model, X_train, y_train, 5, hp.batch_size)
 
     #this evaluates our model
     if ARGS.evaluate:
+        h = train(model, X_train, y_train, 5, hp.batch_size)
         testing_data = Datasets(TEST_PATH, hp.img_size)
         X_test, y_test, testing_labels = testing_data.load_data()
         preds = test(model, X_test)
