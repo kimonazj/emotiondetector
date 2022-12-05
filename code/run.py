@@ -22,7 +22,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 #from livelossplot.inputs.keras import PlotLossesCallback
 from keras.callbacks import ModelCheckpoint, EarlyStopping
-from keras.models import load_weights
+#from keras.models import load_weights
 
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
