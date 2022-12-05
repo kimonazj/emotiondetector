@@ -22,7 +22,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 #from livelossplot.inputs.keras import PlotLossesCallback
 from keras.callbacks import ModelCheckpoint, EarlyStopping
-from keras.models import load_model
+from keras.models import load_weights
 
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
@@ -318,9 +318,10 @@ def main():
 
     #this evaluates our model
     if ARGS.evaluate:
-        h = train(model, X_train, y_train, 5, hp.batch_size)
-        h.save('model.h5')
-        model = load_model('model.h5')
+        h = train(model, X_train, y_train, hp.num_epochs, hp.batch_size)
+        #h.save_weights('model.h5')
+        #model.vgg16.load_weights('model.h5', by_name=False)
+        #model = load_weights('model.h5', by_name=False)
         testing_data = Datasets(TEST_PATH, hp.img_size)
         X_test, y_test, testing_labels = testing_data.load_data()
         preds = test(model, X_test)
