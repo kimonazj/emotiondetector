@@ -166,6 +166,7 @@ def train(model, X, y, epochs, batch_size):
     # ModelCheckpoint callback - save best weights
     tl_checkpoint_1 = ModelCheckpoint(filepath='vgg16_1.h5',
                                   save_best_only=True,
+                                  monitor='loss',
                                   verbose=1)
 
     # EarlyStopping
