@@ -20,7 +20,7 @@ import cv2
 # from skimage.segmentation import mark_boundaries
 from matplotlib import pyplot as plt
 import numpy as np
-from livelossplot.inputs.keras import PlotLossesCallback
+#from livelossplot.inputs.keras import PlotLossesCallback
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -161,7 +161,7 @@ def parse_args():
 #         initial_epoch=init_epoch,
 #     )
 def train(model, X, y, epochs, batch_size):
-    plot_loss_1 = PlotLossesCallback()
+    #plot_loss_1 = PlotLossesCallback()
 
     # ModelCheckpoint callback - save best weights
     tl_checkpoint_1 = ModelCheckpoint(filepath='tl_model_v1.weights.best.hdf5',
