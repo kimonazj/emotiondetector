@@ -22,6 +22,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 #from livelossplot.inputs.keras import PlotLossesCallback
 from keras.callbacks import ModelCheckpoint, EarlyStopping
+from keras.models import load_model
 
 # os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
@@ -164,17 +165,18 @@ def train(model, X, y, epochs, batch_size):
     #plot_loss_1 = PlotLossesCallback()
 
     # ModelCheckpoint callback - save best weights
-    tl_checkpoint_1 = ModelCheckpoint(filepath='vgg16_1.h5',
-                                  save_best_only=True,
-                                  monitor='loss',
-                                  verbose=1)
+    # tl_checkpoint_1 = ModelCheckpoint(filepath='vgg16_1.h5',
+    #                               save_best_only=True,
+    #                               monitor='loss',
+    #                               verbose=1)
 
-    # EarlyStopping
-    early_stop = EarlyStopping(monitor='loss',
-                           patience=10,
-                           restore_best_weights=True,
-                           mode='min')
-    h = model.fit(X, y, epochs = epochs, batch_size = batch_size, callbacks=[tl_checkpoint_1, early_stop],verbose = 1)
+    # # EarlyStopping
+    # early_stop = EarlyStopping(monitor='loss',
+    #                        patience=10,
+    #                        restore_best_weights=True,
+    #                        mode='min')
+    # h = model.fit(X, y, epochs = epochs, batch_size = batch_size, callbacks=[tl_checkpoint_1, early_stop],verbose = 1)
+    h = model.fit(X, y, epochs = epochs, batch_size = batch_size,verbose = 1)
     return h
 
 
@@ -188,7 +190,6 @@ def test(model, X): #, y, batch_size):
     #     # batch_size = batch_size
     #     verbose=1,
     # )
-    model.load_weights('vgg16_1.h5') 
     # initialize the best trained weights
     preds = model.predict(x=X)
     predictions = [np.argmax(p) for p in preds]
@@ -318,6 +319,8 @@ def main():
     #this evaluates our model
     if ARGS.evaluate:
         h = train(model, X_train, y_train, 5, hp.batch_size)
+        h.save('model.h5')
+        model = load_model('model.h5')
         testing_data = Datasets(TEST_PATH, hp.img_size)
         X_test, y_test, testing_labels = testing_data.load_data()
         preds = test(model, X_test)
