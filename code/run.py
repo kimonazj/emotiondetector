@@ -327,7 +327,7 @@ def main():
         preds = test(model, X_test)
         # pred = test(model, X_test, y_test, hp.batch_size)
         print('Test accuracy... = %.2f' % accuracy_score(y_test, preds))
-    if ARGS.makePredictions:
+    elif ARGS.makePredictions:
         data_gen = ImageDataGenerator(rescale = 1.0/255)
         pred_gen = data_gen.flow_from_directory(MY_TEST_PATH, target_size = hp.img_size, color_mode = "grayscale", batch_size = hp.batch_size, class_mode = "categorical", shuffle = False)
         preds = test(model, X_test)
@@ -342,7 +342,6 @@ def main():
             plt.imshow(img)
             plt.title("Our model predicted class: {} {} Actual class: {}".format(prediction, '\n', actual))
             plt.show()
-
     else:
         h = train(model, X_train, y_train, 5, hp.batch_size)
     
