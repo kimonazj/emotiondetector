@@ -101,8 +101,6 @@ def main():
             plt.imshow(img)
             plt.title("Our model predicted class: {} {} Actual class: {}".format(prediction, '\n', actual))
             plt.show()
-    
-    #this is predicting our images
 
 # Make arguments global
 ARGS = parse_args()
