@@ -69,8 +69,8 @@ def main():
     print()
 
 
-    # testing_data = Datasets(MY_TEST_PATH, hp.img_size)
-    testing_data = Datasets(TESTY_PATH, hp.img_size)
+    testing_data = Datasets(MY_TEST_PATH, hp.img_size)
+    # testing_data = Datasets(TESTY_PATH, hp.img_size)
     X_test, y_test, testing_labels = testing_data.load_data()
 
     model = VGGModel()
@@ -83,14 +83,14 @@ def main():
 
     #this evaluates our model
     if ARGS.evaluate:
-        testing_data = Datasets(TESTY_PATH, hp.img_size)
+        testing_data = Datasets(MY_TEST_PATH, hp.img_size)
         X_test, y_test, testing_labels = testing_data.load_data()
         preds = test(model, X_test)
         # pred = test(model, X_test, y_test, hp.batch_size)
         print('Test accuracy... = %.2f' % accuracy_score(y_test, preds))
     elif ARGS.makePredictions:
         data_gen = ImageDataGenerator(rescale = 1.0/255)
-        pred_gen = data_gen.flow_from_directory(TESTY_PATH, target_size = hp.img_size, color_mode = "grayscale", batch_size = hp.batch_size, class_mode = "categorical", shuffle = False)
+        pred_gen = data_gen.flow_from_directory(MY_TEST_PATH, target_size = hp.img_size, color_mode = "grayscale", batch_size = hp.batch_size, class_mode = "categorical", shuffle = False)
         preds = test(model, X_test)
         preds = [testing_labels[l] for l in preds]
         files = pred_gen.filenames
