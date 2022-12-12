@@ -83,7 +83,7 @@ def main():
 
     #this evaluates our model
     if ARGS.evaluate:
-        testing_data = Datasets(TEST_PATH, hp.img_size)
+        testing_data = Datasets(TESTY_PATH, hp.img_size)
         X_test, y_test, testing_labels = testing_data.load_data()
         preds = test(model, X_test)
         # pred = test(model, X_test, y_test, hp.batch_size)
